@@ -18,14 +18,6 @@ export default class homePage extends React.Component {
         }
     }
 
-
-    static route = {
-        navigationBar: {
-            visible: false,
-        },
-    };
-
-
     _renderContent() {
         return Array.from({ length: 30 }).map((_, i) =>
             <TouchableOpacity key={i}  onPress={()=>{
