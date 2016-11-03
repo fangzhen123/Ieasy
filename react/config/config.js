@@ -27,6 +27,7 @@ import {
     StatusBar,
     TouchableWithoutFeedback,
     Easing,
+    BackAndroid,
 } from 'react-native';
 
 
@@ -53,6 +54,7 @@ global.StatusBar = StatusBar;
 global.TouchableWithoutFeedback = TouchableWithoutFeedback;
 global.TouchableWithoutFeedback = TouchableWithoutFeedback;
 global.Easing = Easing;
+global.BackAndroid = BackAndroid;
 
 
 /**
