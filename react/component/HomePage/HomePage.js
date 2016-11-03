@@ -19,15 +19,26 @@ export default class homePage extends React.Component {
     }
 
     _renderContent() {
-        return Array.from({ length: 30 }).map((_, i) =>
-            <TouchableOpacity key={i}  onPress={()=>{
-                console.log(i);
-                ToastAndroid.show('按到我啦~第'+i+'天',ToastAndroid.SHORT)
-            }}
-                              onLongPress={()=>ToastAndroid.show('按痛我了~第'+i+'天',ToastAndroid.SHORT)}>
+
+
+        return Array.from({length: 30}).map((_, i) =>
+            <TouchableOpacity key={i}
+                              onPress={
+                                        ()=> {
+                                                ToastAndroid.show('按到我啦~第' + i + '天', ToastAndroid.SHORT)
+                                             }
+                                        }
+                              onLongPress={
+                                  ()=>{
+
+                                  }
+                              }
+            >
                 <View style={styles.row}>
-                    <Text>第{i}天啦</Text>
+                    <TextInput numberOfLines={3}></TextInput>
+                    <Text style={{textAlign:'right',fontSize:10}}>{nowDate}</Text>
                 </View>
+
             </TouchableOpacity>
         );
     }

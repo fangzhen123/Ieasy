@@ -62,3 +62,19 @@ global.BackAndroid = BackAndroid;
  */
 import URL from './URL';
 global.URL = URL;
+
+
+/**
+ * 获取当时日期
+ * @type {Date}
+ */
+var date = new Date();
+global.nowYear      = date.getFullYear();
+global.nowMonth     = date.getMonth()+1;
+global.nowDay       = date.getDay()<10?('0'+date.getDay()):date.getDay();
+global.nowHour      = date.getHours();
+global.nowMinute    = date.getMinutes();
+global.nowSecond    = date.getSeconds();
+global.nowDateTime  = nowYear+'-'+nowMonth+'-'+nowDay+' '+nowHour+':'+nowMinute+':'+nowSecond;
+global.nowDate  = nowYear+'-'+nowMonth+'-'+nowDay;
+global.nowTime  = nowHour+':'+nowMinute+':'+nowSecond;
