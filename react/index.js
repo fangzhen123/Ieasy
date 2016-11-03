@@ -7,14 +7,11 @@ import './config/config';
 
 import HomePage from './component/HomePage/HomePage';
 
+var backCount;
+
 class NavigatorController extends Component{
     constructor(props){
         super(props);
-        this.state = {
-            backCount:2,//返回按键的次数
-        };
-
-        this._onPressBack = this._onPressBack.bind(this);
     }
     render(){
         //初始化路由页面
@@ -61,20 +58,27 @@ class NavigatorController extends Component{
     }
 
     componentDidMount() {
+        backCount = 1;
         BackAndroid.addEventListener('hardwareBackPress',this._onPressBack);
     }
 
-
     _onPressBack(){
-        this.setState({
-            backCount:6,
-        },function () {
-            if(this.state.backCount){
-                ToastAndroid.show(this.state.backCount+'再按一次退出应用',ToastAndroid.SHORT);
-                return true;
-            }
-            else return false;//退出应用
-        });
+        if(backCount){
+            this.timer = setTimeout(()=>{
+                backCount = 1;
+            },3000);
+
+            backCount--;
+            ToastAndroid.show('再按一次退出Ieasy',ToastAndroid.SHORT);
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+
+    componentWillUnMount() {
+        this.timer&&clearTimeout(this.timer);
     }
 }
 AppRegistry.registerComponent('Ieasy', () => NavigatorController);
