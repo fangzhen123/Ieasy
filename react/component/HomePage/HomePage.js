@@ -4,6 +4,7 @@
 
 import TestAnimated from './TestAnimated';
 import DrawerLayoutComponent from './DrawerLayOutComponent';
+import NoteComponent from './NoteComponent';
 
 
 const PROFILE_WIDTH = 90;
@@ -18,30 +19,6 @@ export default class homePage extends React.Component {
         }
     }
 
-    _renderContent() {
-
-
-        return Array.from({length: 30}).map((_, i) =>
-            <TouchableOpacity key={i}
-                              onPress={
-                                        ()=> {
-                                                ToastAndroid.show('按到我啦~第' + i + '天', ToastAndroid.SHORT)
-                                             }
-                                        }
-                              onLongPress={
-                                  ()=>{
-
-                                  }
-                              }
-            >
-                <View style={styles.row}>
-                    <TextInput numberOfLines={3}></TextInput>
-                    <Text style={{textAlign:'right',fontSize:10}}>{nowDate}</Text>
-                </View>
-
-            </TouchableOpacity>
-        );
-    }
 
     render() {
         const imageOpacity = this.state.scrollY.interpolate({
@@ -104,7 +81,7 @@ export default class homePage extends React.Component {
                     >
                         <Text style={styles.name}>小毛</Text>
 
-                        {this._renderContent()}
+                        <NoteComponent/>
                     </Animated.ScrollView>
 
                     <TestAnimated/>
