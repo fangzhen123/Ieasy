@@ -28,6 +28,7 @@ import {
     TouchableWithoutFeedback,
     Easing,
     BackAndroid,
+    Alert,
 } from 'react-native';
 
 
@@ -55,6 +56,7 @@ global.TouchableWithoutFeedback = TouchableWithoutFeedback;
 global.TouchableWithoutFeedback = TouchableWithoutFeedback;
 global.Easing = Easing;
 global.BackAndroid = BackAndroid;
+global.Alert = Alert;
 
 
 /**
@@ -72,9 +74,9 @@ var date = new Date();
 global.nowYear      = date.getFullYear();
 global.nowMonth     = date.getMonth()+1;
 global.nowDay       = date.getDay()<10?('0'+date.getDay()):date.getDay();
-global.nowHour      = date.getHours();
-global.nowMinute    = date.getMinutes();
-global.nowSecond    = date.getSeconds();
+global.nowHour      = date.getHours()<10?('0'+date.getHours()):date.getHours();
+global.nowMinute    = date.getMinutes()<10?('0'+date.getMinutes()):date.getMinutes();
+global.nowSecond    = date.getSeconds()<10?('0'+date.getMinutes()):date.getSeconds();
 global.nowDateTime  = nowYear+'-'+nowMonth+'-'+nowDay+' '+nowHour+':'+nowMinute+':'+nowSecond;
 global.nowDate  = nowYear+'-'+nowMonth+'-'+nowDay;
 global.nowTime  = nowHour+':'+nowMinute+':'+nowSecond;
