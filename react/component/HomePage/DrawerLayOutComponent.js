@@ -2,6 +2,7 @@
  * Created by fangzhen on 2016/10/31.
  */
 import MyMovieList from '../MoviePage/MyMovieList';
+import {MusicIndex} from '../MusicPage/index';
 
 export default class DrawerLayOutComponent extends Component {
 
@@ -33,7 +34,8 @@ export default class DrawerLayOutComponent extends Component {
 
                     <View style={drawLayoutStyle.itemGround}>
                         <TouchableOpacity onPress={()=> {
-                            ToastAndroid.show('还没做～～', ToastAndroid.SHORT);
+                            this.props.navigator.push({name:'musicIndex',component:MusicIndex,param:{sceneConfig:Navigator.SceneConfigs.FloatFromLeft}});
+                            //ToastAndroid.show('还没做～～', ToastAndroid.SHORT);
                         }}>
                             <Text style={drawLayoutStyle.drawItem}>音乐</Text>
                         </TouchableOpacity>
