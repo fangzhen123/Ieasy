@@ -29,6 +29,7 @@ import {
     Easing,
     BackAndroid,
     Alert,
+    ViewPagerAndroid,
 } from 'react-native';
 
 
@@ -57,6 +58,7 @@ global.TouchableWithoutFeedback = TouchableWithoutFeedback;
 global.Easing = Easing;
 global.BackAndroid = BackAndroid;
 global.Alert = Alert;
+global.ViewPagerAndroid = ViewPagerAndroid;
 
 
 /**
