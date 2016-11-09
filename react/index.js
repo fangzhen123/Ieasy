@@ -56,7 +56,7 @@ class NavigatorController extends Component{
         if(route.param.sceneConfig){
             return route.param.sceneConfig;
         }
-        return Navigator.SceneConfigs.PushFromRight;
+        return Navigator.SceneConfigs.PushFromLeft;
     }
 
     componentDidMount() {
