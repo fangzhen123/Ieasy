@@ -26,7 +26,7 @@ export default class ViewPagerComponent extends Component{
     }
     render(){
         return (
-            <View >
+            <View style={{backgroundColor:'#fff'}}>
                 <ViewPagerAndroid style={styles.pageStyle} initialPage={0}  onPageSelected={this._onPageSelected}>
                     <View>
                         <View style={{flexDirection:'row'}}>

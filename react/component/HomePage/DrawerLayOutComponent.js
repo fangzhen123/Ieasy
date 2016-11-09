@@ -34,7 +34,7 @@ export default class DrawerLayOutComponent extends Component {
 
                     <View style={drawLayoutStyle.itemGround}>
                         <TouchableOpacity onPress={()=> {
-                            this.props.navigator.push({name:'mallIndex',component:MallIndex,param:{sceneConfig:Navigator.SceneConfigs.FadeAndroid}});
+                            this.props.navigator.push({name:'mallIndex',component:MallIndex,param:{sceneConfig:Navigator.SceneConfigs.FloatFromLeft}});
                         }}>
                             <Text style={drawLayoutStyle.drawItem}>商城</Text>
                         </TouchableOpacity>
