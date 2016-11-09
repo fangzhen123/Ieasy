@@ -8,4 +8,6 @@ export default URL = {
     MOVIE_INFO:(id)=>'https://movie.douban.com/subject/'+id+'/mobile',      //电影详情api
 
     BAIDU_NEWS:'http://apis.baidu.com/txapi/tiyu/tiyu',                     //百度体育新闻api
+
+    JUHE_NEWS:'http://v.juhe.cn/toutiao/index',                             //聚合新闻api
 };
