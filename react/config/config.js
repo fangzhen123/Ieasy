@@ -30,6 +30,7 @@ import {
     BackAndroid,
     Alert,
     ViewPagerAndroid,
+    RefreshControl,
 } from 'react-native';
 
 
@@ -59,6 +60,7 @@ global.Easing = Easing;
 global.BackAndroid = BackAndroid;
 global.Alert = Alert;
 global.ViewPagerAndroid = ViewPagerAndroid;
+global.RefreshControl = RefreshControl;
 
 
 /**
@@ -66,6 +68,13 @@ global.ViewPagerAndroid = ViewPagerAndroid;
  */
 import URL from './URL';
 global.URL = URL;
+
+
+/**
+ * 相关配置密钥
+ */
+import KEY from './constant';
+global.KEY = KEY;
 
 
 /**

@@ -3,6 +3,7 @@
  */
 import MyMovieList from '../MoviePage/MyMovieList';
 import {MallIndex} from '../MallPage/index';
+import NewsIndex from '../NewsPage/index';
 
 export default class DrawerLayOutComponent extends Component {
 
@@ -75,7 +76,7 @@ export default class DrawerLayOutComponent extends Component {
                     </View>
                     <View style={drawLayoutStyle.itemGround}>
                         <TouchableOpacity onPress={()=> {
-                            ToastAndroid.show('还没做～～', ToastAndroid.SHORT);
+                            this.props.navigator.push({name: 'newsIndex',component:NewsIndex,param:{sceneConfig:Navigator.SceneConfigs.FloatFromBottom}});
                         }}>
                             <Text style={drawLayoutStyle.drawItem}>新闻</Text>
                         </TouchableOpacity>
