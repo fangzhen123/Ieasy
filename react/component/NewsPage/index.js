@@ -4,6 +4,7 @@
  */
 
 import NewsInfo from './NewsInfo';
+import TopTab from './TopTab';
 
 var keyword = ['篮球','足球','羽毛球','乒乓球','游泳','排球','高尔夫','网球','短跑','詹姆斯','加内特','科比'];
 
@@ -18,13 +19,16 @@ export default class NewsIndex extends Component{
             isRefreshing:false,
             navigator:this.props.navigator,
             loaded:false,
+            tabType:'top',
         };
-        this._getNewsData((data)=>{this.setState({
-            data:data,
-            loaded:true,
-        });})
-    }
 
+        InteractionManager.runAfterInteractions(()=>{
+            this._getNewsData((data)=>{this.setState({
+                data:data,
+                loaded:true,
+            });})
+        });
+    }
 
     /**
      * 获取新闻数据
@@ -33,11 +37,10 @@ export default class NewsIndex extends Component{
      */
     _getNewsData(cb){
 
-        var s = type[Math.floor((Math.random()*type.length))];
+        //var s = type[Math.floor((Math.random()*type.length))];
 
         // var url = URL.BAIDU_NEWS+'?num=10&page=1&word='+s;
-        var url = URL.JUHE_NEWS+'?key='+KEY.JUHE_API_KEY+'&type='+s;
-
+        var url = URL.JUHE_NEWS+'?key='+KEY.JUHE_API_KEY+'&type='+this.state.tabType;
         fetch(url,{
             method:'GET',
         }).then((res)=>res.json())
@@ -52,7 +55,12 @@ export default class NewsIndex extends Component{
     }
 
 
+    /**
+     * 下拉刷新操作
+     * @private
+     */
     _onRefresh = ()=>{
+        console.log('3');
         this.setState({
             isRefreshing:true,
         });
@@ -63,6 +71,11 @@ export default class NewsIndex extends Component{
         }));
     }
 
+    /**
+     * 显示加载页面
+     * @returns {XML}
+     * @private
+     */
     _renderLoadingView() {
         return (
             <View style={{flex: 1,
@@ -82,6 +95,22 @@ export default class NewsIndex extends Component{
     }
 
 
+    /**
+     * 设置tab选中的值
+     * @param value
+     * @private
+     */
+    _getTabType = (value)=>{
+        console.log('2');
+        this.setState({
+            tabType:value,
+            isRefreshing:true,
+        },function(){
+            this._onRefresh()
+        });
+    }
+
+
     render(){
 
         if(!this.state.loaded){
@@ -89,10 +118,10 @@ export default class NewsIndex extends Component{
         }
 
         const newList = this.state.data.map((item,i)=>
-            <TouchableOpacity onPress={()=> {
+            <TouchableOpacity key={i} onPress={()=> {
                 this.props.navigator.push({name:'newsInfo',component:NewsInfo,param:{url:item.url}});
             }}>
-                <View key={i} style={{alignItems: 'center', backgroundColor: '#fff'}}>
+                <View style={{alignItems: 'center', backgroundColor: '#fff'}}>
 
                     <View style={{flexDirection: 'row', margin: 5, borderBottomWidth: 1, borderBottomColor: '#cec8c7'}}>
                         <View style={{flex: 3, justifyContent: 'space-between', marginBottom: 5}}>
@@ -146,6 +175,13 @@ export default class NewsIndex extends Component{
                         <Text style={styles.title}>今日头条</Text>
                     </View>
                 </View>
+
+
+                <View>
+                    <TopTab selectedValue={this._getTabType}/>
+                </View>
+
+
 
                 <View>
                     <ScrollView refreshControl={
