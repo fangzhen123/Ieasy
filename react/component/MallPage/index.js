@@ -12,6 +12,8 @@ import TabNavigator from 'react-native-tab-navigator';
 
 import ViewPagerComponent from './ViewPagerComponent';
 
+import GeoLocationComponent from './../GeoLocation/index';
+
 
 const HOME = '首页';
 const HOME_NORMAL = require('./../../../static/images/tabs/home_normal.png');
@@ -71,6 +73,7 @@ export class MallIndex extends Component{
         return (
             <View style={{flex:1,backgroundColor:'#fff',alignItems:'center',justifyContent:'center'}}>
                 <Text style={{fontSize:22}}>{tag}</Text>
+                <GeoLocationComponent/>
             </View>
         )
     }
