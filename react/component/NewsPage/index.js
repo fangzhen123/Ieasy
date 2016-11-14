@@ -4,10 +4,7 @@
  */
 
 import NewsInfo from './NewsInfo';
-
-var keyword = ['篮球','足球','羽毛球','乒乓球','游泳','排球','高尔夫','网球','短跑','詹姆斯','加内特','科比'];
-
-var type = ['top','shehui','guonei','guoji','yule','tiyu','junshi','keji','caijing','shishang'];
+import TopTab from './TopTab';
 
 export default class NewsIndex extends Component{
 
@@ -18,13 +15,31 @@ export default class NewsIndex extends Component{
             isRefreshing:false,
             navigator:this.props.navigator,
             loaded:false,
+            tabType:'top',
+            dataSource:new ListView.DataSource({
+                rowHasChanged:(a,b)=>a!==b,
+            }),
         };
-        this._getNewsData((data)=>{this.setState({
-            data:data,
-            loaded:true,
-        });})
-    }
 
+        /**
+         * 延迟执行
+         */
+        // InteractionManager.runAfterInteractions(()=>{
+        //
+        // });
+
+        /**
+         * 300ms后请求数据,保证UI切换流畅
+         */
+        setTimeout(()=>{
+            this._getNewsData(()=>{
+                this.setState({
+                    loaded:true,
+                });
+            });
+        },300);
+
+    }
 
     /**
      * 获取新闻数据
@@ -33,18 +48,21 @@ export default class NewsIndex extends Component{
      */
     _getNewsData(cb){
 
-        var s = type[Math.floor((Math.random()*type.length))];
-
-        // var url = URL.BAIDU_NEWS+'?num=10&page=1&word='+s;
-        var url = URL.JUHE_NEWS+'?key='+KEY.JUHE_API_KEY+'&type='+s;
-
+        var url = URL.JUHE_NEWS+'?key='+KEY.JUHE_API_KEY+'&type='+this.state.tabType;
         fetch(url,{
             method:'GET',
         }).then((res)=>res.json())
             .then((data)=>{
                 if(data.reason=='成功的返回'){
-                    cb(data.result.data);
-                }else cb([]);
+                    this.setState({
+                        dataSource:this.state.dataSource.cloneWithRows(data.result.data),
+                    },()=>cb());
+                }
+                else {
+                    this.setState({
+                        dataSource:this.state.dataSource.cloneWithRows([]),
+                    },()=>cb());
+                }
             })
             .catch((error)=>{
                 console.log(error.message);
@@ -52,17 +70,28 @@ export default class NewsIndex extends Component{
     }
 
 
+    /**
+     * 下拉刷新操作
+     * @private
+     */
     _onRefresh = ()=>{
+        console.log('3');
         this.setState({
             isRefreshing:true,
         });
 
-        this._getNewsData((data)=>this.setState({
-            data:data,
-            isRefreshing:false,
-        }));
+        this._getNewsData(()=>{
+            this.setState({
+                isRefreshing:false,
+            });
+        });
     }
 
+    /**
+     * 显示加载页面
+     * @returns {XML}
+     * @private
+     */
     _renderLoadingView() {
         return (
             <View style={{flex: 1,
@@ -82,48 +111,67 @@ export default class NewsIndex extends Component{
     }
 
 
-    render(){
+    /**
+     * 设置tab选中的值
+     * @param value
+     * @private
+     */
+    _getTabType = (value)=>{
+        console.log('2');
+        this.setState({
+            tabType:value,
+            isRefreshing:true,
+        },function(){
+            this._onRefresh()
+        });
+    }
 
-        if(!this.state.loaded){
-            return this._renderLoadingView();
-        }
 
-        const newList = this.state.data.map((item,i)=>
-            <TouchableOpacity onPress={()=> {
-                this.props.navigator.push({name:'newsInfo',component:NewsInfo,param:{url:item.url}});
+
+    _renderNews =(news)=>{
+        return (
+            <TouchableOpacity  onPress={()=> {
+                this.props.navigator.push({name:'newsInfo',component:NewsInfo,param:{url:news.url}});
             }}>
-                <View key={i} style={{alignItems: 'center', backgroundColor: '#fff'}}>
+                <View style={{alignItems: 'center', backgroundColor: '#fff'}}>
 
                     <View style={{flexDirection: 'row', margin: 5, borderBottomWidth: 1, borderBottomColor: '#cec8c7'}}>
                         <View style={{flex: 3, justifyContent: 'space-between', marginBottom: 5}}>
 
                             <View>
-                                <Text style={{fontSize: 20}}>{item.title}</Text>
+                                <Text style={{fontSize: 20}}>{news.title}</Text>
                             </View>
 
                             <View style={{flexDirection: 'row', alignItems: 'stretch'}}>
                                 <View style={{flex: 1}}>
-                                    <Text style={styles.small_title}>{item.author_name}</Text>
+                                    <Text style={styles.small_title}>{news.author_name}</Text>
                                 </View>
 
                                 <View style={{flex: 1}}>
-                                    <Text style={styles.small_title}>{item.date}</Text>
+                                    <Text style={styles.small_title}>{news.date}</Text>
                                 </View>
                             </View>
                         </View>
 
                         <View style={{flex: 2, margin: 10}}>
-                            <Image source={{uri: item.thumbnail_pic_s03}} style={{width: 200, height: 100}}/>
+                            <Image source={{uri: news.thumbnail_pic_s03}} style={{width: 200, height: 100}}/>
                         </View>
                     </View>
 
                 </View>
             </TouchableOpacity>
         );
+    }
 
+
+    render(){
+
+        if(!this.state.loaded){
+            return this._renderLoadingView();
+        }
 
         return(
-            <View>
+            <View style={{flex:1}}>
                 <View style={[{flexDirection:'row'},styles.title_background]}>
 
                     <View style={{flex:1}}>
@@ -147,17 +195,31 @@ export default class NewsIndex extends Component{
                     </View>
                 </View>
 
+
                 <View>
-                    <ScrollView refreshControl={
-                        <RefreshControl
-                            refreshing={this.state.isRefreshing}
-                            onRefresh={this._onRefresh}
-                            colors={['#ff0000', '#00ff00', '#0000ff', '#3ad564']}
-                            progressBackgroundColor="#ffffff"
-                        />
-                    }>
-                        {newList}
-                    </ScrollView>
+                    <TopTab selectedValue={this._getTabType}/>
+                </View>
+
+
+
+                <View style={{flex:1}}>
+                    <ListView
+                        dataSource={this.state.dataSource}
+                        renderRow={this._renderNews}
+                        initialListSize={1}
+                        pageSize={2}
+
+                        refreshControl={
+                            <RefreshControl
+                                refreshing={this.state.isRefreshing}
+                                onRefresh={this._onRefresh}
+                                colors={['#ff0000', '#00ff00', '#0000ff', '#3ad564']}
+                                progressBackgroundColor="#ffffff"
+                            />
+                        }
+                    >
+
+                    </ListView>
                 </View>
             </View>
         );
