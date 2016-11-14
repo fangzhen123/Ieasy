@@ -33,6 +33,7 @@ import {
     RefreshControl,
     Dimensions,
     InteractionManager,
+    Share,
 } from 'react-native';
 
 
@@ -64,6 +65,7 @@ global.Alert = Alert;
 global.ViewPagerAndroid = ViewPagerAndroid;
 global.RefreshControl = RefreshControl;
 global.InteractionManager = InteractionManager;
+global.Share = Share;
 
 //var {height, width} = Dimensions.get('window');
 

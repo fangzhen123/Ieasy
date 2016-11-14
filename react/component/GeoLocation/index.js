@@ -13,10 +13,14 @@ export default class GeoLocationComponent extends Component{
 
     }
     componentDidMount() {
+        console.log('112');
         navigator.geolocation.getCurrentPosition(
             (position)=>{
+                console.log(position);
                 var initialPosition = eval('('+JSON.stringify(position)+')');
+                console.log(initialPosition);
                 var url = URL.POSITION_INFO+'&lat='+initialPosition.coords.latitude+'&lng='+initialPosition.coords.longitude;
+
                 fetch(url,{
                     method:'GET',
                 })
@@ -28,10 +32,10 @@ export default class GeoLocationComponent extends Component{
                     });
             },
             (error)=>{
-                alert(JSON.stringify(error));
+                //alert(JSON.stringify(error));
             },
             {
-                enableHighAccuracy:false,
+                enableHighAccuracy:true,
                 timeout:200000,
                 maximumAge:1000,
             }
