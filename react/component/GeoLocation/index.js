@@ -13,7 +13,7 @@ export default class GeoLocationComponent extends Component{
 
     }
     componentDidMount() {
-        console.log('112');
+
         navigator.geolocation.getCurrentPosition(
             (position)=>{
                 console.log(position);

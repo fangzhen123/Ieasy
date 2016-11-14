@@ -4,6 +4,8 @@
 
 import MovieInfo from './MovieInfo';
 
+import Icon from 'react-native-vector-icons/FontAwesome';
+
 //搜索按钮组件
 class SearchComponent extends Component{
 
@@ -28,7 +30,6 @@ class SearchComponent extends Component{
                     ></TextInput>
                 </View>
 
-
                 <View style={{flex:1,alignItems:'center'}}>
                     <TouchableOpacity
                         onPress={
@@ -43,7 +44,7 @@ class SearchComponent extends Component{
                         }}
                         style={MySceneStyle.searchBtn}
                     >
-                        <Text>搜索</Text>
+                        <Icon name="search" size={30} color='#fff'/>
                     </TouchableOpacity>
                 </View>
             </View>

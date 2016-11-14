@@ -2,8 +2,6 @@
  * Created by fangzhen on 2016/11/14.
  */
 
-import {Camera} from 'react-native-camera';
-
 export default class CameraComponent extends Component {
     render() {
         return (
