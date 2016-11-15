@@ -2,8 +2,28 @@
  * Created by fangzhen on 16/11/14.
  */
 
+
+/**
+ * 可用的图标库
+ * Entypo
+ * EvilIcons
+ * FontAwesome
+ * Foundation
+ * generate-icon
+ * generate-material-icons
+ * Ionicons
+ * MaterialIcons
+ * Octicons
+ * RNIMigration
+ * RNVectorIcons
+ * SimpleLineIcons
+ * Zocial
+ */
+
+
 import Icon from 'react-native-vector-icons/FontAwesome';
-const myIcon = (<Icon name="rocket" size={30} color="#900" />)
+
+const myIcon = (<Icon name="weixin" size={30} color="green" />)
 
 
 export default class IconComponent extends Component{
@@ -12,9 +32,6 @@ export default class IconComponent extends Component{
         return(
             <View>
                 {myIcon}
-                <View>
-                    <Icon name="movies"/>
-                </View>
             </View>
         );
     }

@@ -5,6 +5,10 @@ import MyMovieList from '../MoviePage/MyMovieList';
 import {MallIndex} from '../MallPage/index';
 import NewsIndex from '../NewsPage/index';
 
+import TestIndex from '../Test/index';
+//图标
+import Icon from 'react-native-vector-icons/FontAwesome';
+
 export default class DrawerLayOutComponent extends Component {
 
     constructor(props) {
@@ -27,34 +31,25 @@ export default class DrawerLayOutComponent extends Component {
 
                     <View style={drawLayoutStyle.itemGround}>
                         <TouchableOpacity onPress={()=> {
-                            this.props.navigator.push({name: 'myMovieList',component:MyMovieList,param:{}});
+                            this.props.navigator.push({name: 'myMovieList', component: MyMovieList, param: {}});
                         }}>
-                            <Text style={drawLayoutStyle.drawItem}>电影</Text>
+                            <Text style={drawLayoutStyle.drawItem}><Icon name="film" size={20} color="#7ce889"/>&nbsp;电影</Text>
                         </TouchableOpacity>
                     </View>
 
                     <View style={drawLayoutStyle.itemGround}>
                         <TouchableOpacity onPress={()=> {
-                            this.props.navigator.push({name: 'newsIndex',component:NewsIndex,param:{}});
+                            this.props.navigator.push({name: 'newsIndex', component: NewsIndex, param: {}});
                         }}>
-                            <Text style={drawLayoutStyle.drawItem}>新闻</Text>
+                            <Text style={drawLayoutStyle.drawItem}><Icon name="newspaper-o" size={20} color="#7ce889"/>&nbsp;新闻</Text>
                         </TouchableOpacity>
                     </View>
 
                     <View style={drawLayoutStyle.itemGround}>
                         <TouchableOpacity onPress={()=> {
-                            this.props.navigator.push({name:'mallIndex',component:MallIndex,param:{}});
+                            this.props.navigator.push({name: 'mallIndex', component: MallIndex, param: {}});
                         }}>
-                            <Text style={drawLayoutStyle.drawItem}>商城</Text>
-                        </TouchableOpacity>
-                    </View>
-
-
-                    <View style={drawLayoutStyle.itemGround}>
-                        <TouchableOpacity onPress={()=> {
-                            ToastAndroid.show('还没做～～', ToastAndroid.SHORT);
-                        }}>
-                            <Text style={drawLayoutStyle.drawItem}>音乐</Text>
+                            <Text style={drawLayoutStyle.drawItem}><Icon name="shopping-cart" size={20} color="#7ce889"/>&nbsp;商城</Text>
                         </TouchableOpacity>
                     </View>
 
@@ -63,7 +58,16 @@ export default class DrawerLayOutComponent extends Component {
                         <TouchableOpacity onPress={()=> {
                             ToastAndroid.show('还没做～～', ToastAndroid.SHORT);
                         }}>
-                            <Text style={drawLayoutStyle.drawItem}>图书</Text>
+                            <Text style={drawLayoutStyle.drawItem}><Icon name="music" size={20} color="#7ce889"/>&nbsp;音乐</Text>
+                        </TouchableOpacity>
+                    </View>
+
+
+                    <View style={drawLayoutStyle.itemGround}>
+                        <TouchableOpacity onPress={()=> {
+                            this.props.navigator.push({name: 'testIndex', component: TestIndex, param: {}});
+                        }}>
+                            <Text style={drawLayoutStyle.drawItem}><Icon name="book" size={20} color="#7ce889"/>&nbsp;测试</Text>
                         </TouchableOpacity>
                     </View>
 
@@ -71,7 +75,7 @@ export default class DrawerLayOutComponent extends Component {
                         <TouchableOpacity onPress={()=> {
                             ToastAndroid.show('还没做～～', ToastAndroid.SHORT);
                         }}>
-                            <Text style={drawLayoutStyle.drawItem}>日记</Text>
+                            <Text style={drawLayoutStyle.drawItem}><Icon name="sticky-note-o" size={20} color="#7ce889"/>&nbsp;日记</Text>
                         </TouchableOpacity>
                     </View>
 
@@ -79,7 +83,7 @@ export default class DrawerLayOutComponent extends Component {
                         <TouchableOpacity onPress={()=> {
                             ToastAndroid.show('还没做～～', ToastAndroid.SHORT);
                         }}>
-                            <Text style={drawLayoutStyle.drawItem}>体育</Text>
+                            <Text style={drawLayoutStyle.drawItem}><Icon name="soccer-ball-o" size={20} color="#7ce889"/>&nbsp;体育</Text>
                         </TouchableOpacity>
                     </View>
 
@@ -87,14 +91,14 @@ export default class DrawerLayOutComponent extends Component {
                         <TouchableOpacity onPress={()=> {
                             ToastAndroid.show('还没做～～', ToastAndroid.SHORT);
                         }}>
-                            <Text style={drawLayoutStyle.drawItem}>小说</Text>
+                            <Text style={drawLayoutStyle.drawItem}><Icon name="newspaper-o" size={20} color="#7ce889"/>&nbsp;小说</Text>
                         </TouchableOpacity>
                     </View>
                     <View style={drawLayoutStyle.itemGround}>
                         <TouchableOpacity onPress={()=> {
                             ToastAndroid.show('还没做～～', ToastAndroid.SHORT);
                         }}>
-                            <Text style={drawLayoutStyle.drawItem}>电竞</Text>
+                            <Text style={drawLayoutStyle.drawItem}><Icon name="gamepad" size={20} color="#7ce889"/>&nbsp;电竞</Text>
                         </TouchableOpacity>
                     </View>
                 </ScrollView>
@@ -115,7 +119,7 @@ export default class DrawerLayOutComponent extends Component {
 const drawLayoutStyle = StyleSheet.create({
     backStyle: {
         flex: 1,
-        backgroundColor: '#c8c8a9',
+        backgroundColor: '#fff',
         shadowOpacity: 0.5,
         alignItems: 'center'
     },
@@ -132,10 +136,10 @@ const drawLayoutStyle = StyleSheet.create({
         textAlign: 'center',
         margin: 5,
         padding: 5,
-        color: '#fff'
+        color: '#fff',
     },
     itemGround: {
-        backgroundColor: '#ffac5d',
+        backgroundColor: '#1491e3',
         margin: 15,
         width: 120,
         borderRadius: 5,

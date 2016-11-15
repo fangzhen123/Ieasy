@@ -20,6 +20,7 @@ import RealmComponent from './../Relam/index';
 
 import IconsComponent from  './../Icons/index';
 
+
 const HOME = '首页';
 const HOME_NORMAL = require('./../../../static/images/tabs/home_normal.png');
 const HOME_FOCUS = require('./../../../static/images/tabs/home_focus.png');
@@ -78,10 +79,49 @@ export class MallIndex extends Component{
         return (
             <View style={{flex:1,backgroundColor:'#fff',alignItems:'center',justifyContent:'center'}}>
                 <Text style={{fontSize:22}}>{tag}</Text>
-                <GeoLocationComponent/>
-                <ShareComponent/>
-                <RealmComponent/>
-                <IconsComponent/>
+                <View style={{flex:1,flexDirection:'row',margin:5}}>
+
+                    <View style={{flex:1,flexDirection:'column',alignItems:'center'}}>
+                        <View>
+                            <Text>Icon</Text>
+                        </View>
+                        <View>
+                            <IconsComponent/>
+                        </View>
+                    </View>
+
+                    <View style={{flex:1,flexDirection:'column'}}>
+                        <View>
+                            <Text>GeoLocation</Text>
+                        </View>
+                        <View>
+                            <GeoLocationComponent/>
+                        </View>
+                    </View>
+
+                    <View style={{flex:1,flexDirection:'column'}}>
+                        <View>
+                            <Text>Share</Text>
+                        </View>
+                        <View>
+                            <ShareComponent/>
+                        </View>
+                    </View>
+
+
+                    <View></View>
+                    <View></View>
+                    <View></View>
+                    <View></View>
+                    <View></View>
+                    <View></View>
+                </View>
+
+
+
+
+
+
             </View>
         )
     }

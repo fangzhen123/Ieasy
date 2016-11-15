@@ -44,7 +44,7 @@ export default class ShareComponent extends Component{
         return (
             <View>
                 <TouchableOpacity onPress={this._shareMsg}>
-                    <Text>分享</Text>
+                    <Text>按我分享</Text>
                 </TouchableOpacity>
             </View>
         )
