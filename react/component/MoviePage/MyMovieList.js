@@ -6,55 +6,9 @@ import MovieInfo from './MovieInfo';
 
 import Icon from 'react-native-vector-icons/FontAwesome';
 
-//搜索按钮组件
-class SearchComponent extends Component{
+import SearchInput from './../SearchInput/index';
 
-    constructor(props){
-        super(props);
-        this.state = {
-            inputContent:'',
-        }
-    }
-
-    render(){
-        return (
-            <View style={{flexDirection:'row'}}>
-
-                <View style={{flex:4}}>
-                    <TextInput onChangeText={(text)=>{this.setState({inputContent:text})}}
-                        placeholder="关键词查找"
-                               autoCapitalize='none'
-                               autoCorrect={false}
-                               style={{textAlign:'center'}}
-
-                    ></TextInput>
-                </View>
-
-                <View style={{flex:1,alignItems:'center'}}>
-                    <TouchableOpacity
-                        onPress={
-                            ()=>{
-                                if(this.state.inputContent==''){
-                                    ToastAndroid.show('搜索内容不能为空哦',ToastAndroid.SHORT);
-                                }
-                                else {
-                                    this.props.setKeyWord(this.state.inputContent);
-                                }
-
-                        }}
-                        style={MySceneStyle.searchBtn}
-                    >
-                        <Icon name="search" size={30} color='#fff'/>
-                    </TouchableOpacity>
-                </View>
-            </View>
-        );
-    }
-}
-
-
-
-
+import PageTitle from './../PageTitle/index';
 
 export default class MyMovieList extends Component{
     constructor(props){
@@ -87,14 +41,19 @@ export default class MyMovieList extends Component{
      * @param keyword
      */
     setKeyWord(keyword){
-        this.setState({
-            keyword:keyword,
-            page:1,
-            start:0,
-            data:[],
-        },function () {
-            this.fetchData(URL.SEARCH_MOVIE+keyword);
-        });
+        if(keyword){
+            this.setState({
+                keyword:keyword,
+                page:1,
+                start:0,
+                data:[],
+            },function () {
+                this.fetchData(URL.SEARCH_MOVIE+keyword);
+            });
+        }else {
+            ToastAndroid.show('搜索内容不能为空哦~',ToastAndroid.SHORT);
+        }
+
     }
 
     fetchData(url) {
@@ -125,7 +84,7 @@ export default class MyMovieList extends Component{
                     <Text style={MySceneStyle.title}>时间:   {movies.year}</Text>
                     <Text style={MySceneStyle.title}>类型:   <Text style={{color:'#00D0CF'}}>{movies.genres.join(' / ')}</Text></Text>
                     <TouchableOpacity onPress={()=>{
-                        this.state.navigator.push({name:'movieInfo',param:{url:URL.MOVIE_INFO(movies.id),sceneConfig:Navigator.SceneConfigs.FadeAndroid},component:MovieInfo});
+                        this.state.navigator.push({name:'movieInfo',param:{url:URL.MOVIE_INFO(movies.id)},component:MovieInfo});
                     }}>
                         <View style={MySceneStyle.viewInfo}>
                             <Text style={MySceneStyle.viewText}>查看详情</Text>
@@ -148,30 +107,14 @@ export default class MyMovieList extends Component{
         }
 
         return (
-            <View style={{flex:1}}>
+            <View style={{flex:1,backgroundColor:'#fff'}}>
 
-                <View style={{flexDirection:'row',height:56,alignItems:'center',backgroundColor:'#008ca6'}}>
+                <PageTitle title="我的电影" navigator={this.props.navigator}/>
 
-                    <View style={{flex:1}}>
-                        <TouchableOpacity onPress={()=>{this.props.navigator.jumpBack()}}>
-                            <View>
-                                <Image style={MySceneStyle.backButton} source={require('./../../../static/images/back.png')} />
-                            </View>
-                        </TouchableOpacity>
-                    </View>
-
-
-                    <View style={{flex:3}}>
-                        <Text style={MySceneStyle.pageTitle}>{this.props.title}</Text>
-                    </View>
-
-
-                </View>
-
-                <View>
-                    <SearchComponent setKeyWord={this.setKeyWord}/>
-                </View>
-
+                <SearchInput
+                    onClick={(text)=>this.setKeyWord(text)}
+                    placeholder="查找电影"
+                />
 
                 <View style={{flex:1}}>
                     <ListView
@@ -251,26 +194,10 @@ const MySceneStyle = StyleSheet.create({
         borderRadius:5,
     },
     listView: {
-        paddingTop: 20,
+       // paddingTop: 20,
         backgroundColor: '#F5FCFF',
     },
-    backButton: {
-        width: 20,
-        height: 20,
-        marginLeft: 16,
-        tintColor: 'white',
-    },
-    searchBtn:{
-        backgroundColor: '#9DE2A1',
-        padding: 12,
-        margin:2,
-        borderRadius:5
-    },
-    searchImage:{
-        width:30,
-        height:30,
-        borderWidth:1,
-    },
+
     viewInfo:{
         width:150,
         height:50,

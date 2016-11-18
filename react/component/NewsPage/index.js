@@ -6,6 +6,8 @@
 import NewsInfo from './NewsInfo';
 import TopTab from './TopTab';
 
+import PageTitle from './../PageTitle/index';
+
 export default class NewsIndex extends Component{
 
     constructor(props){
@@ -172,29 +174,8 @@ export default class NewsIndex extends Component{
 
         return(
             <View style={{flex:1}}>
-                <View style={[{flexDirection:'row'},styles.title_background]}>
 
-                    <View style={{flex:1}}>
-                        <TouchableOpacity onPress={()=> {
-                            this.props.navigator.jumpBack()
-                        }}>
-                            <View>
-                                <Image style={{
-                                    width: 20,
-                                    height: 20,
-                                    marginLeft: 16,
-                                    tintColor: 'white',
-                                }} source={require('./../../../static/images/back.png')}/>
-                            </View>
-                        </TouchableOpacity>
-                    </View>
-
-
-                    <View style={{flex:5,alignItems:'center',marginRight:50}}>
-                        <Text style={styles.title}>今日头条</Text>
-                    </View>
-                </View>
-
+                <PageTitle navigator={this.props.navigator} title="今日头条"/>
 
                 <View>
                     <TopTab selectedValue={this._getTabType}/>

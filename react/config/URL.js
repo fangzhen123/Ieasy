@@ -12,4 +12,6 @@ export default URL = {
     JUHE_NEWS:'http://v.juhe.cn/toutiao/index',                             //聚合新闻api
 
     POSITION_INFO:'http://www.gpsspg.com/apis/maps/geo/?output=json&type=0',//经纬度查地址api
+
+    LOL_USER_AREA:'http://lolapi.games-cube.com/UserArea'                   //LOL用户大区信息
 };

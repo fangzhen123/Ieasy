@@ -6,6 +6,8 @@ import {MallIndex} from '../MallPage/index';
 import NewsIndex from '../NewsPage/index';
 
 import TestIndex from '../Test/index';
+
+import LolIndex from '../LOL/index';
 //图标
 import Icon from 'react-native-vector-icons/FontAwesome';
 
@@ -96,7 +98,7 @@ export default class DrawerLayOutComponent extends Component {
                     </View>
                     <View style={drawLayoutStyle.itemGround}>
                         <TouchableOpacity onPress={()=> {
-                            ToastAndroid.show('还没做～～', ToastAndroid.SHORT);
+                            this.props.navigator.push({name:'LolIndex',component:LolIndex,param:{}});
                         }}>
                             <Text style={drawLayoutStyle.drawItem}><Icon name="gamepad" size={20} color="#7ce889"/>&nbsp;电竞</Text>
                         </TouchableOpacity>

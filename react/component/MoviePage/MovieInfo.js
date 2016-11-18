@@ -1,6 +1,7 @@
 /**
  * Created by fangzhen on 16/10/30.
  */
+import PageTitle from './../PageTitle/index';
 
 export default class MovieInfo extends Component{
     render(){
@@ -8,22 +9,8 @@ export default class MovieInfo extends Component{
 
         return (
             <View style={{flex:1}}>
-                <View style={{flexDirection:'row',height:56,alignItems:'center',backgroundColor:'#008ca6'}}>
 
-                    <View style={{flex:1}}>
-                        <TouchableOpacity onPress={()=>{this.props.navigator.jumpBack()}}>
-                            <View>
-                                <Image style={MySceneStyle.backButton} source={require('./../../../static/images/back.png')} />
-                            </View>
-                        </TouchableOpacity>
-                    </View>
-
-
-                    <View style={{flex:3}}>
-                        <Text style={MySceneStyle.pageTitle}>电影详情</Text>
-                    </View>
-
-                </View>
+                <PageTitle title="电影详情" navigator={this.props.navigator}/>
 
                 <WebView source={{uri:this.props.url}}></WebView>
             </View>
