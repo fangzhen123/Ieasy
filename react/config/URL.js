@@ -13,5 +13,25 @@ export default URL = {
 
     POSITION_INFO:'http://www.gpsspg.com/apis/maps/geo/?output=json&type=0',//经纬度查地址api
 
-    LOL_USER_AREA:'http://lolapi.games-cube.com/UserArea'                   //LOL用户大区信息
+    /**
+     * LOL用户大区
+     * method GET
+     * header DAIWAN-API-TOKEN
+     * param  keyword:搜索关键词
+     */
+    LOL_USER_AREA:'http://lolapi.games-cube.com/UserArea',                   //LOL用户大区信息
+    /**
+     * LOL大区信息
+     * method GET
+     * header DAIWAN-API-TOKEN
+     */
+    LOL_AREA:'http://lolapi.games-cube.com/Area',                            //LOL用户大区信息
+
+    /**
+     * LOL用户头像
+     * method GET
+     * header DAIWAN-API-TOKEN
+     * param  iconid:图标id
+     */
+    LOL_USER_ICON:'http://lolapi.games-cube.com/GetUserIcon'                 //LOL用户头像
 };

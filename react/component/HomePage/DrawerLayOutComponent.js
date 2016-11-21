@@ -54,8 +54,13 @@ export default class DrawerLayOutComponent extends Component {
                             <Text style={drawLayoutStyle.drawItem}><Icon name="shopping-cart" size={20} color="#7ce889"/>&nbsp;商城</Text>
                         </TouchableOpacity>
                     </View>
-
-
+                    <View style={drawLayoutStyle.itemGround}>
+                        <TouchableOpacity onPress={()=> {
+                            this.props.navigator.push({name:'LolIndex',component:LolIndex,param:{}});
+                        }}>
+                            <Text style={drawLayoutStyle.drawItem}><Icon name="gamepad" size={20} color="#7ce889"/>&nbsp;电竞</Text>
+                        </TouchableOpacity>
+                    </View>
                     <View style={drawLayoutStyle.itemGround}>
                         <TouchableOpacity onPress={()=> {
                             ToastAndroid.show('还没做～～', ToastAndroid.SHORT);
@@ -94,13 +99,6 @@ export default class DrawerLayOutComponent extends Component {
                             ToastAndroid.show('还没做～～', ToastAndroid.SHORT);
                         }}>
                             <Text style={drawLayoutStyle.drawItem}><Icon name="newspaper-o" size={20} color="#7ce889"/>&nbsp;小说</Text>
-                        </TouchableOpacity>
-                    </View>
-                    <View style={drawLayoutStyle.itemGround}>
-                        <TouchableOpacity onPress={()=> {
-                            this.props.navigator.push({name:'LolIndex',component:LolIndex,param:{}});
-                        }}>
-                            <Text style={drawLayoutStyle.drawItem}><Icon name="gamepad" size={20} color="#7ce889"/>&nbsp;电竞</Text>
                         </TouchableOpacity>
                     </View>
                 </ScrollView>

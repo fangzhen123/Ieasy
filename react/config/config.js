@@ -101,3 +101,10 @@ global.nowSecond    = date.getSeconds()<10?('0'+date.getMinutes()):date.getSecon
 global.nowDateTime  = nowYear+'-'+nowMonth+'-'+nowDay+' '+nowHour+':'+nowMinute+':'+nowSecond;
 global.nowDate  = nowYear+'-'+nowMonth+'-'+nowDay;
 global.nowTime  = nowHour+':'+nowMinute+':'+nowSecond;
+
+/**
+ * 网络请求
+ */
+import FetchUtil from './../util/FetchUtil';
+
+global.FetchUtil = FetchUtil;
