@@ -10,6 +10,8 @@ import SearchInput from './../../common/SearchInput/index';
 
 import PageTitle from './../../common/PageTitle/index';
 
+import LoadingPage from './../../common/LoadingPage/index';
+
 export default class MyMovieList extends Component{
     constructor(props){
         super(props);
@@ -103,7 +105,7 @@ export default class MyMovieList extends Component{
     render(){
 
         if(!this.state.loaded){
-            return this.renderLoadingView();
+            return <LoadingPage/>;
         }
 
         return (
@@ -136,21 +138,6 @@ export default class MyMovieList extends Component{
 
         );
     }
-
-    renderLoadingView() {
-        return (
-            <View style={MySceneStyle.container_loading}>
-                <ActivityIndicator
-                    color="#9DE2A1"
-                    size="large"
-                />
-                <Text>
-                    电影加载中...
-                </Text>
-            </View>
-        );
-    }
-
 
 }
 

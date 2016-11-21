@@ -8,6 +8,8 @@ import TopTab from './TopTab';
 
 import PageTitle from './../../common/PageTitle/index';
 
+import LoadingPage from './../../common/LoadingPage/index';
+
 export default class NewsIndex extends Component{
 
     constructor(props){
@@ -90,30 +92,6 @@ export default class NewsIndex extends Component{
     }
 
     /**
-     * 显示加载页面
-     * @returns {XML}
-     * @private
-     */
-    _renderLoadingView() {
-        return (
-            <View style={{flex: 1,
-                flexDirection: 'row',
-                justifyContent: 'center',
-                alignItems: 'center',
-                backgroundColor: '#F5FCFF',}}>
-                <ActivityIndicator
-                    color="#9DE2A1"
-                    size="large"
-                />
-                <Text>
-                    加载中...
-                </Text>
-            </View>
-        );
-    }
-
-
-    /**
      * 设置tab选中的值
      * @param value
      * @private
@@ -169,7 +147,7 @@ export default class NewsIndex extends Component{
     render(){
 
         if(!this.state.loaded){
-            return this._renderLoadingView();
+            return <LoadingPage/>
         }
 
         return(

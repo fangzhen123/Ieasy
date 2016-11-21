@@ -4,6 +4,7 @@
  */
 
 import ChampionInfo from './championInfo';
+import LoadingPage from './../../common/LoadingPage/index';
 
 export default class ChampionList extends Component{
 
@@ -14,26 +15,20 @@ export default class ChampionList extends Component{
             dataSource:new ListView.DataSource({
                 rowHasChanged:(a,b)=>a!==b,
             }),
+            loaded:false,
         }
-        this._getData();
+        setTimeout(function () {
+            this._getData();
+        }.bind(this),100);
+
     }
-
-
-    getSectionData = (dataBlob, sectionID) => {
-        return dataBlob[sectionID];
-    };
-
-
-    getRowData = (dataBlob, sectionID, rowID) => {
-        return dataBlob[sectionID + ':' + rowID];
-    };
 
     /**
      * 获取英雄列表数据
      * @private
      */
     _getData(){
-        fetch(URL.LOL_USER_CHAMPION,{
+        fetch(URL.LOL_CHAMPION,{
             method:'GET',
             headers:{
                 'DAIWAN-API-TOKEN':KEY.LOL_API_KEY
@@ -54,6 +49,7 @@ export default class ChampionList extends Component{
                     }
                     this.setState({
                         dataSource:this.state.dataSource.cloneWithRows(res),
+                        loaded:true,
                     });
 
             })
@@ -137,16 +133,22 @@ export default class ChampionList extends Component{
     }
 
     render(){
-        return (
-            <View style={{flex:1}}>
-                <ListView
-                    dataSource={this.state.dataSource}
-                    renderRow={this._renderChampionList}
-                    initialListSize={1}
-                    pageSize={2}>
-                </ListView>
-            </View>
-        );
+
+        if(!this.state.loaded){
+            return <LoadingPage title="英雄加载中..."/>
+        }
+        else {
+            return (
+                <View style={{flex:1}}>
+                    <ListView
+                        dataSource={this.state.dataSource}
+                        renderRow={this._renderChampionList}
+                        initialListSize={20}
+                        pageSize={20}>
+                    </ListView>
+                </View>
+            );
+        }
     }
 }
 

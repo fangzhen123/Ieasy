@@ -1,4 +1,6 @@
 /**
+ * github : https://github.com/sincethere/easier-react-native
+ * 文档    : https://github.com/sincethere/easier-react-native/blob/master/Docs.md
  * Created by fangzhen on 16/11/19.
  */
 

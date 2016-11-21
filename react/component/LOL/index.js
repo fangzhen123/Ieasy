@@ -1,157 +1,33 @@
 /**
- * Created by fangzhen on 2016/11/18.
+ * Created by fangzhen on 2016/11/15.
  */
 
-import PageTitle from './../../common/PageTitle/index';
+import SearchUser from './SearchUser';
+import ScrollableTabView from 'react-native-scrollable-tab-view';
+import CustomTabBar from './../../common/TabBar/index';
+import ChampionList from './championsList';
 
-import SearchInput from './../../common/SearchInput/index';
+var tabNames = ['查询','英雄','排行','我'];
+var tabIconNames = ['search','legal','bar-chart-o','user'];
 
-import {TIER} from './../../config/tier';
-
-export default class LolIndex extends Component{
-
-    constructor(props){
-        super(props);
-        this.state = {
-            data:[],
-            dataSource:new ListView.DataSource({
-                rowHasChanged:(a,b)=>a!==b,
-            }),
-            area:[]
-        }
-
-        this._getArea();
-        console.log(TIER);
-    }
-
-
-    /**
-     * 获取LOL大区列表信息
-     * @private
-     */
-    _getArea = ()=>{
-        let fetchUtil = new FetchUtil();
-        fetchUtil.init()
-            .setUrl(URL.LOL_AREA)
-            .setMethod('GET')
-            .setHeader({
-                'DAIWAN-API-TOKEN':KEY.LOL_API_KEY
-            })
-            .dofetch()
-            .then((data)=>{
-                this.setState({
-                    area:data.data
-                });
-            })
-            .catch((error)=>{
-                alert('error:'+error);
-            })
-    }
-
-
-    _getUserIcon = (id)=>{
-        let fetchUtil = new FetchUtil();
-        fetchUtil.init()
-            .setUrl(URL.LOL_USER_ICON+'?iconid='+id)
-            .setMethod('GET')
-            .setHeader({
-                'DAIWAN-API-TOKEN':KEY.LOL_API_KEY
-            })
-            .dofetch()
-            .then((data)=>{
-
-            })
-            .catch((error)=>{
-                alert('error:'+error);
-            })
-    }
-
-
-    _handleClick = (text)=>{
-
-        let fetchUtil = new FetchUtil();
-        fetchUtil.init()
-            .setUrl(URL.LOL_USER_AREA+'?keyword='+text)
-            .setMethod('GET')
-            .setOvertime(30 * 1000)
-            .setHeader({
-                'DAIWAN-API-TOKEN':KEY.LOL_API_KEY
-            })
-            .dofetch()
-            .then((data) => {
-              if(data.code==0){
-                 this.setState({
-                     dataSource:this.state.dataSource.cloneWithRows(data.data)
-                 });
-              }else{
-                    dataSource:this.state.dataSource.cloneWithRows([])
-              }
-            })
-            .catch((error) => {
-                console.log('=> catch: ', error);
-            });
-
-    }
-
-
-
-    _renderRow = (item)=>{
-        var dw = '';
-        if(item.tier==255){
-            dw = '无';
-        }
-        else {
-            dw = TIER[item.tier].title+TIER[item.tier].queue[item.queue]+'   胜点:'+item.win_point;
-        }
-        return(
-            <View style={styles.row}>
-
-                <View style={{flex:1}}>
-
-                </View>
-
-                <View style={{flex:3,flexDirection:'column'}}>
-                    <View >
-                        <Text>{item.name}</Text>
-                    </View>
-
-                    <View style={{flexDirection:'row'}}>
-                        <Text>{this.state.area[item.area_id-1].isp}   {this.state.area[item.area_id-1].name}</Text>
-                        <Text>{item.level}</Text>
-                    </View>
-
-                    <View style={{flexDirection:'row'}}>
-                        <Text>{dw}</Text>
-                    </View>
-
-                </View>
-            </View>
-        );
-    }
+export default class Index extends Component{
 
     render(){
-        return(
+        return (
             <View style={{flex:1,backgroundColor:'#fff'}}>
-                <PageTitle navigator={this.props.navigator} title="召唤师查询"/>
-                <SearchInput
-                    onClick={(text)=>this._handleClick(text)}
-                    placeholder='查询召唤师'
-                />
                 <View style={{flex:1}}>
-                    <ListView
-                        dataSource={this.state.dataSource}
-                        renderRow={this._renderRow}
-                    ></ListView>
+                    <ScrollableTabView
+                        renderTabBar={() => <CustomTabBar tabNames={tabNames} tabIconNames={tabIconNames}/>}
+                        tabBarPosition='bottom'
+                    >
+                        <View style={{flex:1}}><SearchUser navigator={this.props.navigator}/></View>
+                        <View style={{flex:1}}><ChampionList navigator={this.props.navigator}/></View>
+                        <Text>排行</Text>
+                        <Text>我的</Text>
+                    </ScrollableTabView>
                 </View>
+
             </View>
         );
     }
 }
-
-const styles = StyleSheet.create({
-    row:{
-        borderBottomWidth:1,
-        flex:1,
-        flexDirection:'row'
-    }
-});
