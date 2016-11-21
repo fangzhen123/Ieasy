@@ -34,4 +34,7 @@ export default URL = {
      * param  iconid:图标id
      */
     LOL_USER_ICON:'http://lolapi.games-cube.com/GetUserIcon'                 //LOL用户头像
+    LOL_USER_AREA:'http://lolapi.games-cube.com/UserArea',                  //LOL用户大区信息
+
+    LOL_USER_CHAMPION:'http://lolapi.games-cube.com/Champion',              //LOL英雄数据
 };

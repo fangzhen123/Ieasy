@@ -6,9 +6,9 @@ import MovieInfo from './MovieInfo';
 
 import Icon from 'react-native-vector-icons/FontAwesome';
 
-import SearchInput from './../SearchInput/index';
+import SearchInput from './../../common/SearchInput/index';
 
-import PageTitle from './../PageTitle/index';
+import PageTitle from './../../common/PageTitle/index';
 
 export default class MyMovieList extends Component{
     constructor(props){

@@ -1,7 +1,7 @@
 /**
  * Created by fangzhen on 16/10/30.
  */
-import PageTitle from './../PageTitle/index';
+import PageTitle from './../../common/PageTitle/index';
 
 export default class MovieInfo extends Component{
     render(){

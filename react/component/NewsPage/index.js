@@ -6,7 +6,7 @@
 import NewsInfo from './NewsInfo';
 import TopTab from './TopTab';
 
-import PageTitle from './../PageTitle/index';
+import PageTitle from './../../common/PageTitle/index';
 
 export default class NewsIndex extends Component{
 

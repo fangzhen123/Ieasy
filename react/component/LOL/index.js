@@ -2,9 +2,9 @@
  * Created by fangzhen on 2016/11/18.
  */
 
-import PageTitle from './../PageTitle/index';
+import PageTitle from './../../common/PageTitle/index';
 
-import SearchInput from './../SearchInput/index';
+import SearchInput from './../../common/SearchInput/index';
 
 import {TIER} from './../../config/tier';
 
