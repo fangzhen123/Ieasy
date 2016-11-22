@@ -5,6 +5,7 @@
 
 import ChampionInfo from './championInfo';
 import LoadingPage from './../../common/LoadingPage/index';
+import PageTitle from './../../common/PageTitle/index';
 
 export default class ChampionList extends Component{
 
@@ -140,6 +141,7 @@ export default class ChampionList extends Component{
         else {
             return (
                 <View style={{flex:1}}>
+                    <PageTitle title="英雄列表" navigator={this.props.navigator}/>
                     <ListView
                         dataSource={this.state.dataSource}
                         renderRow={this._renderChampionList}

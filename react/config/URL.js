@@ -65,4 +65,6 @@ export default URL = {
      * param champion_id:英雄id  skinid:皮肤id
      */
     LOL_CHAMPION_SKIN:'http://lolapi.games-cube.com/GetChampionSkin',
+
+    LOL_CHAMPION__SKIN_URL:'http://cdn.tgp.qq.com/pallas/images/skins/original/',
 };
