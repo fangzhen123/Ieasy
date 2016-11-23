@@ -67,4 +67,16 @@ export default URL = {
     LOL_CHAMPION_SKIN:'http://lolapi.games-cube.com/GetChampionSkin',
 
     LOL_CHAMPION__SKIN_URL:'http://cdn.tgp.qq.com/pallas/images/skins/original/',
+
+    LOL_USER_ICON_URL:'http://cdn.tgp.qq.com/lol/images/resources/usericon/',
+
+    /**
+     * 用户基本信息
+     */
+    LOL_USER_BASIC_INFO:'http://lolapi.games-cube.com/UserHotInfo',
+
+    /**
+     * 用户详细信息
+     */
+    LOL_USER_EXT_INFO:'http://lolapi.games-cube.com/UserExtInfo',
 };

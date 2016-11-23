@@ -6,7 +6,22 @@ import PageTitle from './../../common/PageTitle/index';
 
 import SearchInput from './../../common/SearchInput/index';
 
+import Icon from 'react-native-vector-icons/FontAwesome';
+
+import UserInfo from './userInfo';
+
 import {TIER} from './../../config/tier';
+
+/**
+ * 搜索历史数据表
+ * @type {{name: string, properties: {}}}
+ */
+const search_history = {
+    name:'SearchHistory',
+    properties:{
+        keyword:'string',
+    }
+};
 
 export default class SearchUser extends Component{
 
@@ -17,11 +32,11 @@ export default class SearchUser extends Component{
             dataSource:new ListView.DataSource({
                 rowHasChanged:(a,b)=>a!==b,
             }),
-            area:[]
+            area:[],
+            firstSearch:true,
         }
-
         this._getArea();
-        console.log(TIER);
+        this.realm  = new Realm({schema:[search_history]});
     }
 
 
@@ -48,26 +63,21 @@ export default class SearchUser extends Component{
             })
     }
 
-
-    _getUserIcon = (id)=>{
-        let fetchUtil = new FetchUtil();
-        fetchUtil.init()
-            .setUrl(URL.LOL_USER_ICON+'?iconid='+id)
-            .setMethod('GET')
-            .setHeader({
-                'DAIWAN-API-TOKEN':KEY.LOL_API_KEY
-            })
-            .dofetch()
-            .then((data)=>{
-
-            })
-            .catch((error)=>{
-                alert('error:'+error);
-            })
-    }
-
-
+    /**
+     * 搜索召唤师
+     * @param text
+     * @private
+     */
     _handleClick = (text)=>{
+        /**
+         * realm本地保存搜索记录
+         */
+        this.realm.write(()=>{
+            this.realm.create('SearchHistory',{keyword:text});
+        });
+        this.setState({
+            firstSearch:false,
+        });
 
         let fetchUtil = new FetchUtil();
         fetchUtil.init()
@@ -98,53 +108,105 @@ export default class SearchUser extends Component{
     _renderRow = (item)=>{
         var dw = '';
         if(item.tier==255){
-            dw = '无';
+            dw = '-';
         }
         else {
             dw = TIER[item.tier].title+TIER[item.tier].queue[item.queue]+'   胜点:'+item.win_point;
         }
         return(
-            <View style={styles.row}>
-
-                <View style={{flex:1}}>
-
-                </View>
-
-                <View style={{flex:3,flexDirection:'column'}}>
-                    <View >
-                        <Text>{item.name}</Text>
+            <View style={{flex:1}}>
+                <TouchableOpacity style={styles.row} onPress={()=>{
+                        this.props.navigator.push({name:'userInfo',component:UserInfo,param:{...item}});
+                }}>
+                    <View style={{flex:1}}>
+                        <Image source={{uri:URL.LOL_USER_ICON_URL+item.icon_id+'.png'}} style={styles.icon_img}></Image>
                     </View>
 
-                    <View style={{flexDirection:'row'}}>
-                        <Text>{this.state.area[item.area_id-1].isp}   {this.state.area[item.area_id-1].name}</Text>
-                        <Text>{item.level}</Text>
-                    </View>
+                    <View style={{flex:3,flexDirection:'column'}}>
 
-                    <View style={{flexDirection:'row'}}>
-                        <Text>{dw}</Text>
-                    </View>
+                        <View style={{flex:1,flexDirection:'row',alignItems:'center'}}>
+                            <View style={styles.icon_style}>
+                                <Icon name="paper-plane" size={10}/>
+                            </View>
+                            <View>
+                                <Text style={styles.name_style}>{item.name}</Text>
+                            </View>
+                            <View style={styles.level_style}>
+                                <Text style={styles.level_title}>{item.level}</Text>
+                            </View>
+                        </View>
 
-                </View>
+                        <View style={{flexDirection:'row',alignItems:'center'}}>
+                            <View style={styles.icon_style}>
+                                <Icon name="map-marker" size={12}/>
+                            </View>
+                            <View>
+                                <Text style={styles.text_style}>{this.state.area[item.area_id-1].isp}</Text>
+                            </View>
+                            <View>
+                                <Text style={styles.text_style}>   {this.state.area[item.area_id-1].name}</Text>
+                            </View>
+
+                        </View>
+
+                        <View style={{flexDirection:'row',alignItems:'center'}}>
+                            <View style={styles.icon_style}>
+                                <Icon name="anchor" size={10}/>
+                            </View>
+
+                            <View>
+                                <Text style={styles.text_style}>{dw}</Text>
+                            </View>
+                        </View>
+
+                    </View>
+                </TouchableOpacity>
             </View>
         );
     }
 
     render(){
-        return(
-            <View style={{flex:1,backgroundColor:'#fff'}}>
-                <PageTitle navigator={this.props.navigator} title="召唤师查询"/>
-                <SearchInput
-                    onClick={(text)=>this._handleClick(text)}
-                    placeholder='查询召唤师'
-                />
-                <View style={{flex:1}}>
-                    <ListView
-                        dataSource={this.state.dataSource}
-                        renderRow={this._renderRow}
-                    ></ListView>
+
+        if(this.state.firstSearch){
+            let search_history = this.realm.objects('SearchHistory');
+            // let s = search_history.slice(0,1);
+            var viewOut = [];
+            for(let i in search_history){
+                viewOut.push(<Text>{search_history[i].keyword}</Text>)
+            }
+
+            return(
+                <View style={{flex:1,backgroundColor:'#fff'}}>
+                    <PageTitle navigator={this.props.navigator} title="召唤师查询"/>
+                    <SearchInput
+                        onClick={(text)=>this._handleClick(text)}
+                        placeholder='查询召唤师'
+                    />
+
+                    <View style={{flex:1,flexDirection:'column'}}>
+                        {viewOut}
+                    </View>
+
                 </View>
-            </View>
-        );
+            );
+        }
+        else {
+            return(
+                <View style={{flex:1,backgroundColor:'#fff'}}>
+                    <PageTitle navigator={this.props.navigator} title="召唤师查询"/>
+                    <SearchInput
+                        onClick={(text)=>this._handleClick(text)}
+                        placeholder='查询召唤师'
+                    />
+                    <View style={{flex:1}}>
+                        <ListView
+                            dataSource={this.state.dataSource}
+                            renderRow={this._renderRow}
+                        ></ListView>
+                    </View>
+                </View>
+            );
+        }
     }
 }
 
@@ -152,6 +214,39 @@ const styles = StyleSheet.create({
     row:{
         borderBottomWidth:1,
         flex:1,
-        flexDirection:'row'
+        flexDirection:'row',
+        margin:2,
+        borderColor:'#d4d4d3',
+        padding:5,
+    },
+    level_style:{
+        backgroundColor:'#f7ac46',
+        width:20,
+        height:10,
+        alignItems:'center',
+        justifyContent:'center',
+        borderRadius:2,
+    },
+    level_title:{
+        fontSize:10,
+        color:'#fff',
+    },
+    icon_img:{
+        width:60,
+        height:60,
+        borderRadius:3
+    },
+    icon_style:{
+        width:10,
+        height:10,
+        alignItems:'center',
+        justifyContent:'center',
+        marginRight:5
+    },
+    text_style:{
+        fontSize:12,
+    },
+    name_style:{
+        fontWeight:'bold',
     }
 });
