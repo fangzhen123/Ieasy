@@ -18,8 +18,10 @@ import {TIER} from './../../config/tier';
  */
 const search_history = {
     name:'SearchHistory',
+    primaryKey:'keyword',
     properties:{
         keyword:'string',
+        search_time:'int',
     }
 };
 
@@ -72,9 +74,14 @@ export default class SearchUser extends Component{
         /**
          * realm本地保存搜索记录
          */
-        this.realm.write(()=>{
-            this.realm.create('SearchHistory',{keyword:text});
-        });
+        let isExist = this.realm.objects('SearchHistory').filtered('keyword="'+text+'"').length;
+        if(!isExist){
+            this.realm.write(()=>{
+                let date = new Date();
+                this.realm.create('SearchHistory',{keyword:text,search_time:date.getTime()});
+            });
+        }
+
         this.setState({
             firstSearch:false,
         });
@@ -168,11 +175,16 @@ export default class SearchUser extends Component{
     render(){
 
         if(this.state.firstSearch){
-            let search_history = this.realm.objects('SearchHistory');
-            // let s = search_history.slice(0,1);
+            let search_history = this.realm.objects('SearchHistory').sorted('search_time');
             var viewOut = [];
             for(let i in search_history){
-                viewOut.push(<Text>{search_history[i].keyword}</Text>)
+                viewOut.push(
+                    <TouchableOpacity key={i} onPress={()=>{
+                        this._handleClick(search_history[i].keyword);
+                    }}>
+                        <View  style={styles.search_history}><Text>{search_history[i].keyword}</Text></View>
+                    </TouchableOpacity>
+                );
             }
 
             return(
@@ -184,6 +196,9 @@ export default class SearchUser extends Component{
                     />
 
                     <View style={{flex:1,flexDirection:'column'}}>
+                        <View style={styles.search_history_tips}>
+                            <Text>搜索历史</Text>
+                        </View>
                         {viewOut}
                     </View>
 
@@ -248,5 +263,17 @@ const styles = StyleSheet.create({
     },
     name_style:{
         fontWeight:'bold',
+    },
+    search_history:{
+        height:40,
+        borderBottomWidth:1,
+        borderBottomColor:'#e8dfdd',
+        justifyContent:'center',
+        paddingLeft:20,
+    },
+    search_history_tips:{
+        alignItems:'center',
+        backgroundColor:'#fdf5f5',
+        margin:5,
     }
 });
