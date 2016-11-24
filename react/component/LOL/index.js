@@ -6,6 +6,7 @@ import SearchUser from './SearchUser';
 import ScrollableTabView from 'react-native-scrollable-tab-view';
 import CustomTabBar from './../../common/TabBar/index';
 import ChampionList from './championsList';
+import MyDetail from './myDetail';
 
 var tabNames = ['查询','英雄','排行','我'];
 var tabIconNames = ['search','legal','bar-chart-o','user'];
@@ -23,7 +24,7 @@ export default class Index extends Component{
                         <View style={{flex:1}}><SearchUser navigator={this.props.navigator}/></View>
                         <View style={{flex:1}}><ChampionList navigator={this.props.navigator}/></View>
                         <Text>排行</Text>
-                        <Text>我的</Text>
+                        <View style={{flex:1}}><MyDetail navigator={this.props.navigator}/></View>
                     </ScrollableTabView>
                 </View>
 

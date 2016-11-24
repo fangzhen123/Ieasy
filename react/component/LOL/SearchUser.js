@@ -71,43 +71,47 @@ export default class SearchUser extends Component{
      * @private
      */
     _handleClick = (text)=>{
-        /**
-         * realm本地保存搜索记录
-         */
-        let isExist = this.realm.objects('SearchHistory').filtered('keyword="'+text+'"').length;
-        if(!isExist){
-            this.realm.write(()=>{
-                let date = new Date();
-                this.realm.create('SearchHistory',{keyword:text,search_time:date.getTime()});
+        if(text){
+            /**
+             * realm本地保存搜索记录
+             */
+            let isExist = this.realm.objects('SearchHistory').filtered('keyword="'+text+'"').length;
+            if(!isExist){
+                this.realm.write(()=>{
+                    let date = new Date();
+                    this.realm.create('SearchHistory',{keyword:text,search_time:date.getTime()});
+                });
+            }
+
+            this.setState({
+                firstSearch:false,
             });
+
+            let fetchUtil = new FetchUtil();
+            fetchUtil.init()
+                .setUrl(URL.LOL_USER_AREA+'?keyword='+text)
+                .setMethod('GET')
+                .setOvertime(30 * 1000)
+                .setHeader({
+                    'DAIWAN-API-TOKEN':KEY.LOL_API_KEY
+                })
+                .dofetch()
+                .then((data) => {
+                    if(data.code==0){
+                        this.setState({
+                            dataSource:this.state.dataSource.cloneWithRows(data.data)
+                        });
+                    }else{
+                        dataSource:this.state.dataSource.cloneWithRows([])
+                    }
+                })
+                .catch((error) => {
+                    console.log('=> catch: ', error);
+                });
         }
-
-        this.setState({
-            firstSearch:false,
-        });
-
-        let fetchUtil = new FetchUtil();
-        fetchUtil.init()
-            .setUrl(URL.LOL_USER_AREA+'?keyword='+text)
-            .setMethod('GET')
-            .setOvertime(30 * 1000)
-            .setHeader({
-                'DAIWAN-API-TOKEN':KEY.LOL_API_KEY
-            })
-            .dofetch()
-            .then((data) => {
-              if(data.code==0){
-                 this.setState({
-                     dataSource:this.state.dataSource.cloneWithRows(data.data)
-                 });
-              }else{
-                    dataSource:this.state.dataSource.cloneWithRows([])
-              }
-            })
-            .catch((error) => {
-                console.log('=> catch: ', error);
-            });
-
+        else {
+            ToastAndroid.show('搜索内容不能为空~',ToastAndroid.SHORT);
+        }
     }
 
 
@@ -175,7 +179,7 @@ export default class SearchUser extends Component{
     render(){
 
         if(this.state.firstSearch){
-            let search_history = this.realm.objects('SearchHistory').sorted('search_time');
+            let search_history = this.realm.objects('SearchHistory').sorted('search_time','DESC');//降序排列
             var viewOut = [];
             for(let i in search_history){
                 viewOut.push(
