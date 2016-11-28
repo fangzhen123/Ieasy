@@ -118,16 +118,19 @@ export default class SearchUser extends Component{
 
     _renderRow = (item)=>{
         var dw = '';
+        var sw = '';
         if(item.tier==255){
             dw = '-';
+            sw = '-';
         }
         else {
             dw = TIER[item.tier].title+TIER[item.tier].queue[item.queue]+'   胜点:'+item.win_point;
+            sw = TIER[item.tier].title+TIER[item.tier].queue[item.queue];
         }
         return(
             <View style={{flex:1}}>
                 <TouchableOpacity style={styles.row} onPress={()=>{
-                        this.props.navigator.push({name:'userInfo',component:UserInfo,param:{...item}});
+                        this.props.navigator.push({name:'userInfo',component:UserInfo,param:{...item,area:this.state.area[item.area_id-1].name,tier:sw}});
                 }}>
                     <View style={{flex:1}}>
                         <Image source={{uri:URL.LOL_USER_ICON_URL+item.icon_id+'.png'}} style={styles.icon_img}></Image>

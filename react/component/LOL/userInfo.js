@@ -83,17 +83,41 @@ export default class UserInfo extends Component{
                 <View style={{flex:1,backgroundColor:'#fff'}}>
                     <PageTitle title={this.props.name} navigator={this.props.navigator}/>
 
-                    <View style={{flexDirection:'row',height:80}}>
-                        <View style={{flex:1}}>
-                            <View style={{flex:1}}>
-                                <Image source={{uri:URL.LOL_USER_ICON_URL+this.props.icon_id+'.png'}} style={styles.icon_img}></Image>
+                    <View style={{flex:1}}>
+                        <Image source={require('./images/background.jpg')} style={{width:SceneWidth,height:150}}>
+
+                            <View style={{flex:1,flexDirection:'row'}}>
+
+                                <View style={{flex:1,flexDirection:'row'}}>
+
+                                    <View style={{marginTop:10,flex:1}}>
+                                        <View style={{flex:1,flexDirection:'row'}}>
+                                            <Image source={{uri:URL.LOL_USER_ICON_URL+this.props.icon_id+'.png'}} style={styles.icon_img}></Image>
+                                            <View style={{flex:1,flexDirection:'column',marginLeft:5,marginBottom:15,justifyContent:'center'}}>
+                                                <Text style={styles.text_style}>{this.props.area}</Text>
+                                                <Text style={styles.text_style}>{this.props.name}</Text>
+                                            </View>
+                                        </View>
+                                    </View>
+
+                                </View>
+
+                                <View style={{flex:1,flexDirection:'column',justifyContent:'center',alignItems:'flex-end',marginRight:15}}>
+                                    <View style={{backgroundColor:'#7dc4f4',width:80,alignItems:'center',borderRadius:3}}>
+                                        <Text style={{fontSize:15,color:'#fff'}}>段位</Text>
+                                    </View>
+                                    <View style={{width:80,alignItems:'center',backgroundColor:'#fff',borderRadius:3}}>
+                                        <Text style={{fontSize:20,color:'#7dc4f4'}}>{this.props.tier}</Text>
+                                    </View>
+                                </View>
                             </View>
-                        </View>
-                        <View style={{flex:1}}>
-                            <Text>战斗力:{this.state.user_basic_info.power_value}</Text>
-                            <Text>排   名:{this.state.user_basic_info.rank_last_battle}</Text>
-                        </View>
+
+                        </Image>
+
                     </View>
+
+
+
 
                     <View>
                         <Text>最近30天位置:</Text>
@@ -153,9 +177,13 @@ const styles = StyleSheet.create({
         color:'#fff',
     },
     icon_img:{
-        width:60,
-        height:60,
-        borderRadius:3
+        width:100,
+        height:100,
+        borderRadius:3,
+        borderWidth:4,
+        borderColor:'#fff',
+        marginTop:10,
+        marginLeft:10,
     },
     icon_style:{
         width:10,
@@ -165,9 +193,11 @@ const styles = StyleSheet.create({
         marginRight:5
     },
     text_style:{
-        fontSize:12,
+        fontSize:20,
+        color:'#fff',
     },
     name_style:{
         fontWeight:'bold',
-    }
+    },
+
 });
