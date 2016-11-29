@@ -79,11 +79,19 @@ export default class UserInfo extends Component{
             );
         }
         else {
+
+            var KDA = (this.state.user_ext_info[0].items[0].recent_kda.k_num+this.state.user_ext_info[0].items[0].recent_kda.a_num)/(this.state.user_ext_info[0].items[0].recent_kda.d_num)*3;
+            var K = this.state.user_ext_info[0].items[0].recent_kda.k_num/this.state.user_ext_info[0].items[0].recent_kda.use_num;
+            var D = this.state.user_ext_info[0].items[0].recent_kda.d_num/this.state.user_ext_info[0].items[0].recent_kda.use_num;
+            var A = this.state.user_ext_info[0].items[0].recent_kda.a_num/this.state.user_ext_info[0].items[0].recent_kda.use_num;
+            var win_rate = (this.state.user_ext_info[0].items[0].recent_kda.win_num/this.state.user_ext_info[0].items[0].recent_kda.use_num)*100;
+
             return (
-                <View style={{flex:1,backgroundColor:'#fff'}}>
+                <View style={{flex:1,backgroundColor:'#fff',flexDirection:'column'}}>
+
                     <PageTitle title={this.props.name} navigator={this.props.navigator}/>
 
-                    <View style={{flex:1}}>
+                    <View>
                         <Image source={require('./images/background.jpg')} style={{width:SceneWidth,height:150}}>
 
                             <View style={{flex:1,flexDirection:'row'}}>
@@ -102,7 +110,7 @@ export default class UserInfo extends Component{
 
                                 </View>
 
-                                <View style={{flex:1,flexDirection:'column',justifyContent:'center',alignItems:'flex-end',marginRight:15}}>
+                                <View style={{flex:1,flexDirection:'column',justifyContent:'center',alignItems:'center'}}>
                                     <View style={{backgroundColor:'#7dc4f4',width:80,alignItems:'center',borderRadius:3}}>
                                         <Text style={{fontSize:15,color:'#fff'}}>段位</Text>
                                     </View>
@@ -113,41 +121,95 @@ export default class UserInfo extends Component{
                             </View>
 
                         </Image>
-
                     </View>
+                    <ScrollView>
+                        <View style={{flex:1,flexDirection:'column'}}>
+                            <View>
+                                <Text>最近表现</Text>
+                            </View>
+
+                            <View style={{flex:1,flexDirection:'row'}}>
+                                <View style={{flex:1}}>
+                                    <View>
+                                        <Text>KDA</Text>
+                                        <Text>{KDA.toFixed(1)}    {K.toFixed(1)}/{D.toFixed(1)}/{A.toFixed(1)}</Text>
+                                    </View>
+
+                                    <View>
+                                        <Text>胜率/场次</Text>
+                                        <Text>{win_rate.toFixed(1)}%/{this.state.user_ext_info[0].items[0].recent_kda.use_num}场</Text>
+                                    </View>
+
+                                </View>
+
+                                <View style={{flex:1,marginRight:20}}>
+                                    <Text>位置</Text>
+                                    <View style={{flexDirection:'row'}}>
+                                        <View style={{flex:1}}>
+                                            <Text>上单</Text>
+                                        </View>
+                                        <View style={{flex:4}}>
+                                            <ProgressBarAndroid color="#f24a29" styleAttr="Horizontal" progress={this.state.user_ext_info[0].items[0].recent_position.up_use_num/this.state.user_ext_info[0].items[0].recent_kda.use_num} indeterminate={false}/>
+                                        </View>
+                                    </View>
+                                    <View style={{flexDirection:'row'}}>
+                                        <View style={{flex:1}}>
+                                            <Text>中单</Text>
+                                        </View>
+                                        <View style={{flex:4}}>
+                                            <ProgressBarAndroid color="#e3af5c" styleAttr="Horizontal" progress={this.state.user_ext_info[0].items[0].recent_position.mid_use_num/this.state.user_ext_info[0].items[0].recent_kda.use_num} indeterminate={false}/>
+                                        </View>
+                                    </View>
+                                    <View style={{flexDirection:'row'}}>
+                                        <View style={{flex:1}}>
+                                            <Text>打野</Text>
+                                        </View>
+                                        <View style={{flex:4}}>
+                                            <ProgressBarAndroid color="#2cce55" styleAttr="Horizontal" progress={this.state.user_ext_info[0].items[0].recent_position.jungle_use_num/this.state.user_ext_info[0].items[0].recent_kda.use_num} indeterminate={false}/>
+                                        </View>
+                                    </View>
+                                    <View style={{flexDirection:'row'}}>
+                                        <View style={{flex:1}}>
+                                            <Text>ADC</Text>
+                                        </View>
+                                        <View style={{flex:4}}>
+                                            <ProgressBarAndroid color="#2796c7" styleAttr="Horizontal" progress={this.state.user_ext_info[0].items[0].recent_position.adc_use_num/this.state.user_ext_info[0].items[0].recent_kda.use_num} indeterminate={false}/>
+                                        </View>
+                                    </View>
+                                    <View style={{flexDirection:'row'}}>
+                                        <View style={{flex:1}}>
+                                            <Text>辅助</Text>
+                                        </View>
+                                        <View style={{flex:4}}>
+                                            <ProgressBarAndroid color="#be15c9" styleAttr="Horizontal" progress={this.state.user_ext_info[0].items[0].recent_position.aux_use_num/this.state.user_ext_info[0].items[0].recent_kda.use_num} indeterminate={false}/>
+                                        </View>
+                                    </View>
+                                </View>
+                            </View>
+                        </View>
+
+                        <View style={{flex:1}}>
+
+                            <View>
+                                <Text>历史荣誉</Text>
+                                <Text>三杀：{this.state.user_ext_info[1].triple_kills}</Text>
+                                <Text>四杀：{this.state.user_ext_info[1].quadra_kills}</Text>
+                                <Text>五杀：{this.state.user_ext_info[1].penta_kills}</Text>
+                                <Text>超神：{this.state.user_ext_info[1].god_like_num}</Text>
+                                <Text>总击杀：{this.state.user_ext_info[1].kills_total}</Text>
+                                <Text>总助攻：{this.state.user_ext_info[1].assists_total}</Text>
+                                <Text>匹配mvp：{this.state.user_ext_info[2].total_match_mvps}</Text>
+                                <Text>排位mvp：{this.state.user_ext_info[2].total_rank_mvps}</Text>
+                                <Text>使用英雄数：{this.state.user_ext_info[3].champion_num}</Text>
+                            </View>
+                        </View>
+
+                    </ScrollView>
 
 
 
 
-                    <View>
-                        <Text>最近30天位置:</Text>
-                        <Text>打野: {this.state.user_ext_info[0].items[0].recent_position.jungle_win_num}/{this.state.user_ext_info[0].items[0].recent_position.jungle_use_num}</Text>
-                        <Text>A D: {this.state.user_ext_info[0].items[0].recent_position.adc_win_num}/{this.state.user_ext_info[0].items[0].recent_position.adc_use_num}</Text>
-                        <Text>上单: {this.state.user_ext_info[0].items[0].recent_position.up_win_num}/{this.state.user_ext_info[0].items[0].recent_position.up_use_num}</Text>
-                        <Text>中单: {this.state.user_ext_info[0].items[0].recent_position.mid_win_num}/{this.state.user_ext_info[0].items[0].recent_position.mid_use_num}</Text>
-                        <Text>辅助: {this.state.user_ext_info[0].items[0].recent_position.aux_win_num}/{this.state.user_ext_info[0].items[0].recent_position.aux_use_num}</Text>
-                    </View>
-                    <View>
-                        <Text>最近30天KDA</Text>
-                        <Text>K :{this.state.user_ext_info[0].items[0].recent_kda.k_num}</Text>
-                        <Text>D :{this.state.user_ext_info[0].items[0].recent_kda.d_num}</Text>
-                        <Text>A :{this.state.user_ext_info[0].items[0].recent_kda.a_num}</Text>
-                        <Text>胜利场数 :{this.state.user_ext_info[0].items[0].recent_kda.win_num}</Text>
-                        <Text>总场数 :{this.state.user_ext_info[0].items[0].recent_kda.use_num}</Text>
-                    </View>
 
-                    <View>
-                        <Text>历史荣誉</Text>
-                        <Text>三杀：{this.state.user_ext_info[1].triple_kills}</Text>
-                        <Text>四杀：{this.state.user_ext_info[1].quadra_kills}</Text>
-                        <Text>五杀：{this.state.user_ext_info[1].penta_kills}</Text>
-                        <Text>超神：{this.state.user_ext_info[1].god_like_num}</Text>
-                        <Text>总击杀：{this.state.user_ext_info[1].kills_total}</Text>
-                        <Text>总助攻：{this.state.user_ext_info[1].assists_total}</Text>
-                        <Text>匹配mvp：{this.state.user_ext_info[2].total_match_mvps}</Text>
-                        <Text>排位mvp：{this.state.user_ext_info[2].total_rank_mvps}</Text>
-                        <Text>使用英雄数：{this.state.user_ext_info[3].champion_num}</Text>
-                    </View>
                 </View>
             );
         }
@@ -177,10 +239,10 @@ const styles = StyleSheet.create({
         color:'#fff',
     },
     icon_img:{
-        width:100,
-        height:100,
+        width:80,
+        height:80,
         borderRadius:3,
-        borderWidth:4,
+        borderWidth:3,
         borderColor:'#fff',
         marginTop:10,
         marginLeft:10,
@@ -193,7 +255,7 @@ const styles = StyleSheet.create({
         marginRight:5
     },
     text_style:{
-        fontSize:20,
+        fontSize:15,
         color:'#fff',
     },
     name_style:{
