@@ -79,4 +79,14 @@ export default URL = {
      * 用户详细信息
      */
     LOL_USER_EXT_INFO:'http://lolapi.games-cube.com/UserExtInfo',
+
+    /**
+     * 用户比赛列表
+     */
+    LOL_BAT_LIST:'http://lolapi.games-cube.com/CombatList',
+
+    /**
+     * 比赛详情
+     */
+    LOL_BAT_DETAIL:'http://lolapi.games-cube.com/GameDetail',
 };
