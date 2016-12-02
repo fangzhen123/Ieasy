@@ -5,5 +5,5 @@
 export default KEY = {
     BAIDU_API_KEY:'ae37157eec6f75ef47464959014db854',               //百度api的key
     JUHE_API_KEY:'e8c24a546c7ec420f532c0bce00a1f00',                //聚合api的key
-    LOL_API_KEY:'20343-2C204-AB2AA-3342A',                          //LOL apikey
+    LOL_API_KEY:'7870C-347A4-DD37A-D050C',                          //LOL apikey
 }
