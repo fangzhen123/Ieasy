@@ -10,8 +10,12 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 
 import ChampionInfo from './championInfo';
 
+import UserInfo from './userInfo';
+
 const game_type = ['','自定义','新手关','匹配赛','排位赛','战队赛','大乱斗','人机','统治战场','大对决'];
+game_type[11] ='匹配赛';
 game_type[24] = '火力赛';
+game_type[25] = '匹配赛';
 
 export default class GameDetail extends Component{
 
@@ -69,6 +73,7 @@ export default class GameDetail extends Component{
                 <LoadingPage title="战绩加载中..."/>
             );
         }
+
         var win_players = [];
         var failed_players = [];
 
@@ -112,18 +117,18 @@ export default class GameDetail extends Component{
                                 <View style={{flex: 1,alignItems:'center'}}>
                                     <Image
                                         source={{uri: 'http://cdn.tgp.qq.com/pallas/images/champions_id/' + item.champion_id + '.png'}}
-                                        style={{width: 60, height: 60,marginRight:5}}></Image>
+                                        style={{width: 70, height: 70,marginRight:5}}></Image>
                                 </View>
                             </TouchableOpacity>
 
                             <View style={{flex:3,flexDirection:'column'}}>
 
                                 <View style={{flexDirection:'row'}}>
-                                    <View style={{flex:3}}>
+                                    <View style={{flex:2}}>
                                         <TouchableOpacity onPress={()=>{
-
+                                            this.props.navigator.push({name:'userInfo',component:UserInfo,param:{qquin:item.qquin,area_id:this.props.vaid}});
                                         }}>
-                                            <Text style={{fontSize:20,fontWeight:'bold'}}>{item.name}</Text>
+                                            <Text style={{fontSize:18}}>{item.name}</Text>
                                         </TouchableOpacity>
                                     </View>
 
@@ -188,7 +193,7 @@ export default class GameDetail extends Component{
                                 <View style={{flex: 1,alignItems:'center'}}>
                                     <Image
                                         source={{uri: 'http://cdn.tgp.qq.com/pallas/images/champions_id/' + item.champion_id + '.png'}}
-                                        style={{width: 60, height: 60,marginRight:5}}></Image>
+                                        style={{width: 70, height: 70,marginRight:5}}></Image>
                                 </View>
                             </TouchableOpacity>
 
@@ -197,9 +202,9 @@ export default class GameDetail extends Component{
                                 <View style={{flexDirection:'row'}}>
                                     <View style={{flex:3}}>
                                         <TouchableOpacity onPress={()=>{
-
+                                            this.props.navigator.push({name:'userInfo',component:UserInfo,param:{qquin:item.qquin,area_id:this.props.vaid}});
                                         }}>
-                                            <Text style={{fontSize:20,fontWeight:'bold'}}>{item.name}</Text>
+                                            <Text style={{fontSize:18}}>{item.name}</Text>
                                         </TouchableOpacity>
                                     </View>
 

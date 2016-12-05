@@ -9,7 +9,9 @@ import LoadingPage from './../../common/LoadingPage/index';
 import GameDetail from './gameDetail';
 
 const game_type = ['','自定义','新手关','匹配赛','排位赛','战队赛','大乱斗','人机','统治战场','大对决'];
+game_type[11] = '匹配赛';
 game_type[24] = '火力赛';
+game_type[25] = '匹配赛';
 
 
 export default class GameList extends Component{

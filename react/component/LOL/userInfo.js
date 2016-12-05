@@ -10,8 +10,12 @@ import GameDetail from './gameDetail';
 
 import GameList from './gameList';
 
+import {TIER} from './../../config/tier';
+
 const game_type = ['','自定义','新手关','匹配赛','排位赛','战队赛','大乱斗','人机','统治战场','大对决'];
+game_type[11] = '匹配赛';
 game_type[24] = '火力赛';
+game_type[25] = '匹配赛';
 
 export default class UserInfo extends Component{
 
@@ -21,15 +25,40 @@ export default class UserInfo extends Component{
             user_basic_info: [],
             user_ext_info: [],
             user_bat_list:[],
+            area:[],
             loaded:false,
         }
 
         setTimeout(()=>{
+            this._getArea();
             this._getUserBasicInfo();
             this._getUserExtInfo();
             this._getUserBatList();
         },300);
 
+    }
+
+    /**
+     * 获取LOL大区列表信息
+     * @private
+     */
+    _getArea = ()=>{
+        let fetchUtil = new FetchUtil();
+        fetchUtil.init()
+            .setUrl(URL.LOL_AREA)
+            .setMethod('GET')
+            .setHeader({
+                'DAIWAN-API-TOKEN':KEY.LOL_API_KEY
+            })
+            .dofetch()
+            .then((data)=>{
+                this.setState({
+                    area:data.data
+                });
+            })
+            .catch((error)=>{
+                alert('error:'+error);
+            })
     }
 
     /**
@@ -165,10 +194,18 @@ export default class UserInfo extends Component{
                 }
             );
 
+            var sw = '';
+            if(this.state.user_basic_info.tier==255){
+                sw = '-';
+            }
+            else {
+                sw = TIER[this.state.user_basic_info.tier].title+TIER[this.state.user_basic_info.tier].queue[this.state.user_basic_info.queue];
+            }
+
             return (
                 <View style={{flex:1,backgroundColor:'#fff',flexDirection:'column'}}>
 
-                    <PageTitle title={this.props.name} navigator={this.props.navigator}/>
+                    <PageTitle title={this.state.user_basic_info.name} navigator={this.props.navigator}/>
 
                     <View>
                         <Image source={require('./images/background.jpg')} style={{width:SceneWidth,height:150}}>
@@ -179,10 +216,10 @@ export default class UserInfo extends Component{
 
                                     <View style={{marginTop:10,flex:1}}>
                                         <View style={{flex:1,flexDirection:'row'}}>
-                                            <Image source={{uri:URL.LOL_USER_ICON_URL+this.props.icon_id+'.png'}} style={styles.icon_img}></Image>
+                                            <Image source={{uri:URL.LOL_USER_ICON_URL+this.state.user_basic_info.icon+'.png'}} style={styles.icon_img}></Image>
                                             <View style={{flex:1,flexDirection:'column',marginLeft:5,marginBottom:15,justifyContent:'center'}}>
-                                                <Text style={styles.text_style}>{this.props.area}</Text>
-                                                <Text style={styles.text_style}>{this.props.name}</Text>
+                                                <Text style={styles.text_style}>{this.state.area[this.state.user_basic_info.area_id-1].name}</Text>
+                                                <Text style={styles.text_style}>{this.state.user_basic_info.name}</Text>
                                             </View>
                                         </View>
                                     </View>
@@ -194,7 +231,7 @@ export default class UserInfo extends Component{
                                         <Text style={{fontSize:15,color:'#fff'}}>段位</Text>
                                     </View>
                                     <View style={{width:80,alignItems:'center',backgroundColor:'#fff',borderRadius:3}}>
-                                        <Text style={{fontSize:20,color:'#7dc4f4'}}>{this.props.tier}</Text>
+                                        <Text style={{fontSize:20,color:'#7dc4f4'}}>{sw}</Text>
                                     </View>
                                 </View>
                             </View>
@@ -218,12 +255,12 @@ export default class UserInfo extends Component{
 
                                     <View style={{flex:1}}>
 
-                                        <View style={{alignItems:'center'}}>
+                                        <View style={{alignItems:'center',justifyContent:'center',flex:1}}>
                                             <Text style={{fontSize:15}}>KDA</Text>
                                             <Text style={{fontSize:12}}>{KDA.toFixed(1)}    {K.toFixed(1)}/{D.toFixed(1)}/{A.toFixed(1)}</Text>
                                         </View>
 
-                                        <View style={{alignItems:'center',marginTop:20}}>
+                                        <View style={{alignItems:'center',flex:1,justifyContent:'center'}}>
                                             <Text style={{fontSize:15}}>胜率/场次</Text>
                                             <Text style={{fontSize:12}}>{win_rate.toFixed(1)}%/{this.state.user_ext_info[0].items[0].recent_kda.use_num}场</Text>
                                         </View>
