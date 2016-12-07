@@ -200,7 +200,7 @@ export default class GameDetail extends Component{
                             <View style={{flex:3,flexDirection:'column'}}>
 
                                 <View style={{flexDirection:'row'}}>
-                                    <View style={{flex:3}}>
+                                    <View style={{flex:2}}>
                                         <TouchableOpacity onPress={()=>{
                                             this.props.navigator.push({name:'userInfo',component:UserInfo,param:{qquin:item.qquin,area_id:this.props.vaid}});
                                         }}>
